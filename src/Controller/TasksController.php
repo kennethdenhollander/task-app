@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TasksController extends AbstractController
 {
-    #[Route('/tasks', name: 'tasks')]
+    #[Route('/', name: 'tasks')]
     public function index(): Response
     {
         $tasks = [
