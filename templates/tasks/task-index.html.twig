@@ -1,12 +1,11 @@
 {% extends 'base.html.twig' %}
-
-
 {% block body %}
     <div class="container">
         <ul class="list-group">
             {% for task in tasks %}
                 <li class="list-group-item">
-                    {{ task }}
+                    <h2>{{ task.name }}</h2>
+                    <small>{{ task.description }}</small>
                 </li>
             {% endfor %}
         </ul>

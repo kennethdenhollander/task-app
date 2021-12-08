@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {{ slug }}
+    <h2>{{ task.name }}</h2>
+    <small>{{ task.description }}</small>
 {% endblock %}
