@@ -10,6 +10,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TasksController extends AbstractController
 {
+    // https://symfony.com/doc/current/forms.html#rendering-forms
+
     #[Route('/', name: 'tasks')]
     public function index(ManagerRegistry $doctrine): Response
     {
