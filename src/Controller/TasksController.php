@@ -60,6 +60,7 @@ class TasksController extends AbstractController
         return new RedirectResponse($this->generateUrl('tasks'));
     }
 
+    // Page to create a task
     #[Route('/create', name: 'create')]
     public function create(Request $request, ManagerRegistry $doctrine): Response
     {
@@ -67,7 +68,8 @@ class TasksController extends AbstractController
         $form = $this->createForm(TasksType::class, $task);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) 
+        // Check if the form is submitted
+        if ($form->isSubmitted() && $form->isValid()) 
         {
             // Get the form data
             $task = $form->getData();
@@ -76,6 +78,7 @@ class TasksController extends AbstractController
             $entityManager->persist($task);
             $entityManager->flush();
 
+            // Redirect to the homepage that displays all tasks
             return $this->redirectToRoute('tasks');
         }
 
