@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        {{ form_start(form) }}
+        <div class="mb-3">    
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name, {'attr': {'value': task.name}}) }}
+        </div>
+        <div class="mb-3">
+            {{ form_label(form.description) }}
+            {{ form_widget(form.description, {'attr': {'value': task.description}}) }}
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

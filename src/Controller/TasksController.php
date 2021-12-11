@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class TasksController extends AbstractController
 {
-    // https://symfony.com/doc/current/forms.html#rendering-forms
 
     #[Route('/', name: 'tasks')]
     public function index(ManagerRegistry $doctrine, Request $request): Response
@@ -47,15 +46,71 @@ class TasksController extends AbstractController
         ]);
     }
 
-    // Making a route where the information of task is shown
-    #[Route('/tasks/{id}', name: 'task_show')]
+    #[Route ('/tasks/edit/{id}', name: 'edit_task')]
+    public function edit(ManagerRegistry $doctrine, int $id, Request $request): Response
+    {
+        $task = new Task();
+        $form = $this->createForm(TasksType::class, $task);
+        $form->handleRequest($request);
+
+        $entityManager = $doctrine->getManager();
+        $task = $entityManager->getRepository(Task::class)->find($id);
+
+        // Check if the form is submitted
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
+            // Get the form data
+            $data = $form->getData();
+
+
+            $name = $form['name']->getData();
+            $description = $form['description']->getData();
+
+            $task->setName($name);
+            $task->setDescription($description);
+            $entityManager->flush();
+
+            // Redirect to the homepage that displays all tasks
+            return $this->redirectToRoute('tasks');
+        }
+
+        return $this->render('tasks/edit.html.twig', [
+            'form' => $form->createView(),
+            'task' => $task
+        ]);
+    }
+
+    // Route for deleting tasks
+    #[Route('/tasks/remove/{id}', name: 'remove_task')]
+    public function delete(ManagerRegistry $doctrine, int $id): Response
+    {   
+        $entityManager = $doctrine->getManager();
+        $task = $entityManager->getRepository(Task::class)->find($id);
+
+        if ($task)
+        {
+            $entityManager = $doctrine->getManager();
+            $entityManager->remove($task);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('tasks');
+        }
+
+        // Throws an exception when the id is not found
+        throw $this->createNotFoundException(
+            'No task found for id ' . $id
+        );
+    }
+
+    // Route for 'One' view
+    #[Route('/tasks/{id}', name: 'task_show', requirements: ['id' => '\d+'])]
     public function show(ManagerRegistry $doctrine, int $id): Response
     {
         $task = $doctrine->getRepository(Task::class)->find($id);
 
         if (!$task) {
             throw $this->createNotFoundException(
-                'No product found for id '.$id
+                'No product found for id ' . $id
             );
         }
 
