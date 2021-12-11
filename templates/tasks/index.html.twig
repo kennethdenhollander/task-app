@@ -1,23 +1,29 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="container">
-        {{ form(form) }}
-        <ul class="list-group">
-            {% for task in tasks %}
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col-8">
-                            <h2>{{ task.id }}: {{ task.name }}</h2>
-                            <small>{{ task.description }}</small>
-                        </div>
-                        <div class="col-4 text-end">
-                            <a class="btn btn-danger" href="/tasks/remove/{{ task.id }}">Delete Task</a>
-                            <a class="btn btn-warning" href="/tasks/edit/{{ task.id }}">Edit Task</a>
-                        </div>
-                    </div>
+    <section class="section section-index pt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-xl-8 mx-auto">
+                    {{ form(form) }}
+                    <ul class="list-group">
+                        {% for task in tasks %}
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <h2>{{ task.id }}: {{ task.name }}</h2>
+                                        <small>{{ task.description }}</small>
+                                    </div>
+                                    <div class="col-4 text-end">
+                                        <a class="btn btn-danger" href="/tasks/remove/{{ task.id }}">Delete Task</a>
+                                        <a class="btn btn-warning" href="/tasks/edit/{{ task.id }}">Edit Task</a>
+                                    </div>
+                                </div>
 
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

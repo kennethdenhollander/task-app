@@ -14,7 +14,7 @@ class TasksType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('submit', SubmitType::class)
+            ->add('Opslaan', SubmitType::class)
         ;
     }
 
