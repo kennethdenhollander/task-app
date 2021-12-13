@@ -59,15 +59,13 @@ class TasksController extends AbstractController
         // Check if the form is submitted
         if ($form->isSubmitted() && $form->isValid()) 
         {
-            // Get the form data
-            $data = $form->getData();
-
-
             $name = $form['name']->getData();
             $description = $form['description']->getData();
+            $complete = $form['complete']->getData();
 
             $task->setName($name);
             $task->setDescription($description);
+            $task->setComplete($complete);
             $entityManager->flush();
 
             // Redirect to the homepage that displays all tasks
@@ -89,8 +87,27 @@ class TasksController extends AbstractController
 
         if ($task)
         {
-            $entityManager = $doctrine->getManager();
             $entityManager->remove($task);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('tasks');
+        }
+
+        // Throws an exception when the id is not found
+        throw $this->createNotFoundException(
+            'No task found for id ' . $id
+        );
+    }
+
+    #[Route('/tasks/complete/{id}', name: 'complete_task')]
+    public function complete(ManagerRegistry $doctrine, int $id): Response
+    {
+        $entityManager = $doctrine->getManager();
+        $task = $entityManager->getRepository(Task::class)->find($id);
+
+        if ($task)
+        {
+            $task->setComplete(true);
             $entityManager->flush();
 
             return $this->redirectToRoute('tasks');
@@ -118,4 +135,6 @@ class TasksController extends AbstractController
             'task' => $task,
         ]);
     }
+
+
 }
