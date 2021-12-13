@@ -10,6 +10,10 @@
             {{ form_label(form.description) }}
             {{ form_widget(form.description, {'attr': {'value': task.description}}) }}
         </div>
+        <div class="mb-3">
+            {{ form_label(form.complete) }}
+            {{ form_widget(form.complete, { 'attr': {'checked': (task.complete) ? 'checked' : 'false' } }) }}
+        </div>
         {{ form_end(form) }}
     </div>
 {% endblock %}
