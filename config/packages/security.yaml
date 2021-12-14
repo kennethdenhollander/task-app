@@ -22,6 +22,7 @@ security:
             provider: app_user_provider
             logout: 
                 path: app_logout
+                target: login
             form_login:
                     login_path: login
                     check_path: login
@@ -37,3 +38,4 @@ security:
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/tasks, roles: ROLE_USER }
+
