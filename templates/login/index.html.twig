@@ -6,6 +6,8 @@
             <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
 
+        <h1>Aanmelden</h1>
+
         <form action="{{ path('login') }}" method="post">
             <div class="mb-3">
                 <label for="username" class="form-label">E-mailadres</label>
