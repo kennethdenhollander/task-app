@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class TasksController extends AbstractController
 {
 
-    #[Route('/', name: 'tasks')]
+    #[Route('/tasks', name: 'tasks')]
     public function index(ManagerRegistry $doctrine, Request $request): Response
     {
         // Getting all tasks
