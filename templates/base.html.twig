@@ -14,7 +14,7 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body>
+    <body class="page-{{ app.request.requesturi|trim('/')}}">
         {% include 'partials/_navbar.twig' %}
         {% block body %}{% endblock %}
     </body>
