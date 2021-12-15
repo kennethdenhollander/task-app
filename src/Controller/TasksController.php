@@ -47,14 +47,18 @@ class TasksController extends AbstractController
     }
 
     #[Route ('/tasks/edit/{id}', name: 'edit_task')]
-    public function edit(ManagerRegistry $doctrine, int $id, Request $request): Response
+    public function edit(ManagerRegistry $doctrine, int $id = null, Request $request): Response
     {
-        $task = new Task();
+        if ($id !== null)
+        {
+            $entityManager = $doctrine->getManager();
+            $task = $entityManager->getRepository(Task::class)->find($id);
+        } else {
+            $task = new Task();
+        }
+
         $form = $this->createForm(TasksType::class, $task);
         $form->handleRequest($request);
-
-        $entityManager = $doctrine->getManager();
-        $task = $entityManager->getRepository(Task::class)->find($id);
 
         // Check if the form is submitted
         if ($form->isSubmitted() && $form->isValid()) 
