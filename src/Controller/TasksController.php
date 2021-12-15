@@ -36,7 +36,7 @@ class TasksController extends AbstractController
         {   
 
             $task = $form->getData();
-            $task->setByUserId($userId);
+            $task->setCreator($userId);
 
             $entityManager = $doctrine->getManager();
             $entityManager->persist($task);

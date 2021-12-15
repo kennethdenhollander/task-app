@@ -40,11 +40,6 @@ class Task
      */
     private $creator;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $byUserId;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -94,18 +89,6 @@ class Task
     public function setCreator(string $creator): self
     {
         $this->creator = $creator;
-
-        return $this;
-    }
-
-    public function getByUserId(): ?int
-    {
-        return $this->byUserId;
-    }
-
-    public function setByUserId(int $byUserId): self
-    {
-        $this->byUserId = $byUserId;
 
         return $this;
     }

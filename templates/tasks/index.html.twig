@@ -15,10 +15,10 @@
                                     </div>
                                     <div class="col-4 text-end">
                                         {% if task.complete == false %}
-                                            <a class="btn btn-success" href="/tasks/complete/{{ task.id }}">Complete</a>
+                                            <a class="btn btn-primary" href="/tasks/complete/{{ task.id }}">Complete</a>
                                         {% endif %}
-                                        <a class="btn btn-danger" href="/tasks/remove/{{ task.id }}">Delete</a>
-                                        <a class="btn btn-warning" href="/tasks/edit/{{ task.id }}">Edit</a>
+                                        <a class="btn btn-secondary" href="/tasks/remove/{{ task.id }}">Delete</a>
+                                        <a class="btn btn-primary" href="/tasks/edit/{{ task.id }}">Edit</a>
                                     </div>
                                 </div>
 
