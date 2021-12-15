@@ -35,6 +35,16 @@ class Task
      */
     private $complete;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $creator;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $byUserId;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -72,6 +82,30 @@ class Task
     public function setComplete(bool $complete): self
     {
         $this->complete = $complete;
+
+        return $this;
+    }
+
+    public function getCreator(): ?string
+    {
+        return $this->creator;
+    }
+
+    public function setCreator(string $creator): self
+    {
+        $this->creator = $creator;
+
+        return $this;
+    }
+
+    public function getByUserId(): ?int
+    {
+        return $this->byUserId;
+    }
+
+    public function setByUserId(int $byUserId): self
+    {
+        $this->byUserId = $byUserId;
 
         return $this;
     }

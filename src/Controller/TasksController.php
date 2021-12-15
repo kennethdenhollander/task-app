@@ -17,9 +17,14 @@ class TasksController extends AbstractController
 
     #[Route('/tasks', name: 'tasks')]
     public function index(ManagerRegistry $doctrine, Request $request): Response
-    {
+    {   
+        // Getting the current userID
+        $userId = $this->getUser()->getId();
+
         // Getting all tasks
-        $tasks = $doctrine->getRepository(Task::class)->findAll();
+        $tasks = $doctrine->getRepository(Task::class)->findBy(
+            ['creator' => $userId]
+        );
         
         // Setting new Task object and creating form
         $task = new Task();
@@ -28,9 +33,10 @@ class TasksController extends AbstractController
 
         // Check if the form is submitted
         if ($form->isSubmitted() && $form->isValid()) 
-        {
-            // Get the form data
+        {   
+
             $task = $form->getData();
+            $task->setByUserId($userId);
 
             $entityManager = $doctrine->getManager();
             $entityManager->persist($task);
@@ -48,13 +54,22 @@ class TasksController extends AbstractController
 
     #[Route ('/tasks/edit/{id}', name: 'edit_task')]
     public function edit(ManagerRegistry $doctrine, int $id = null, Request $request): Response
-    {
-        if ($id !== null)
+    {       
+        $task = new Task();
+        $userId = $this->getUser()->getId();
+        $entityManager = $doctrine->getManager();
+        $task = $entityManager->getRepository(Task::class)->findOneBy(
+            array(
+                'id' => $id,
+                'creator' => $userId
+            )
+        );
+
+        if (empty($task) || $task == null)
         {
-            $entityManager = $doctrine->getManager();
-            $task = $entityManager->getRepository(Task::class)->find($id);
-        } else {
-            $task = new Task();
+            throw $this->createNotFoundException(
+                'No task found for id ' . $id
+            );
         }
 
         $form = $this->createForm(TasksType::class, $task);
